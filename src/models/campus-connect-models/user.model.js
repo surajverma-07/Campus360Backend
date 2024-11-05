@@ -74,24 +74,10 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    // Friend relationships
-    friends: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Users", // Reference to another User document
-      },
-    ],
     isAdmin: {
       type: Boolean,
       default:false
     },
-    // Friend requests - Array of user IDs for pending requests
-    friendRequests: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Users", // User who sent the request
-      },
-    ],
   },
   { timestamps: true }
 );

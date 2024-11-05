@@ -28,15 +28,6 @@ import {
   getMyEvents
 } from "../controllers/campus-connect/event.controllers.js";
 
-//Friend Controllers import
-import {
-  sendFriendRequest,
-  acceptFriendRequest,
-  rejectFriendRequest,
-  getFriendRequests,
-  getAllFriends,
-} from "../controllers/campus-connect/friends.controllers.js";
-
 //Career related imports
 import {
   addOpportunity,
@@ -85,13 +76,6 @@ router.route("/event/my").get(verifyJWT, getMyEvents);
 router.route("/event/:id").get(verifyJWT, getEventDetails);
 router.route("/event/delete/:id").delete(verifyJWT, deleteEvent);
 router.route("/event/update/:id").patch(verifyJWT, updateEvent);
-
-//Friend Related Route
-router.route("/friend/send/:id").post(verifyJWT, sendFriendRequest);
-router.route("/friend/accept/:id").post(verifyJWT, acceptFriendRequest);
-router.route("/friend/reject/:id").post(verifyJWT, rejectFriendRequest);
-router.route("/friend/requests").get(verifyJWT, getFriendRequests);
-router.route("/friend/all").get(verifyJWT, getAllFriends);
 
 //Opportunities/career related routes
 router.route("/career/add").post(verifyJWT, addOpportunity);
