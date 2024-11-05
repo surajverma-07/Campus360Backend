@@ -182,6 +182,7 @@ const rejectApplication = asyncHandler(async (req, res) => {
 
   // Reset application status without making the user an event organizer
   user.isAppliedForEventOrganizer = false;
+  user.isEventOrganizer = false;
   await user.save({ validateBeforeSave: false });
 
   return res
