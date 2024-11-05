@@ -17,10 +17,11 @@ const genratingAccessToken = async (userId) => {
 };
 
 const options = {
-  httpOnly: true,
-  secure: true,
-};
-
+  expires: new Date(Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000),
+  httpOnly:true,
+  secure:true,
+  sameSite:'None'
+}
 //User Registration
 const registerUser = asyncHandler(async (req, res) => {
   //get data from user
@@ -30,10 +31,10 @@ const registerUser = asyncHandler(async (req, res) => {
     email,
     rollnum,
     password,
+    college,
     course,
     branch_section,
-    year,
-    college
+    year
   } = req.body;
   //check for data availability
   if (
@@ -42,6 +43,7 @@ const registerUser = asyncHandler(async (req, res) => {
       name &&
       email &&
       rollnum &&
+      college &&
       course &&
       branch_section &&
       year &&
@@ -69,6 +71,7 @@ const registerUser = asyncHandler(async (req, res) => {
       name,
       email,
       rollnum,
+      college,
       course,
       branch_section,
       year,
@@ -92,7 +95,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
 //User Login
 const loginUser = asyncHandler(async (req, res) => {
-  const { email, username, password, rollnum } = req.body;
+  const { email, username, password, rollnum } = await req.body;
 
   if (!(username || email || rollnum)) {
     throw new ApiError(400, "Enter username or email or Roll Number ");
@@ -141,7 +144,7 @@ const logoutUser = asyncHandler(async (req, res) => {
 //Password Changing
 const changeCurrentPassword = asyncHandler(async (req, res) => {
   //taking input from user
-  const { oldPassword, newPassword } = req.body;
+  const { oldPassword, newPassword } = await req.body;
   const user = await UserModel.findById(req.user?._id);
   const isPasswordCorrect = await user.isPasswordCorrect(oldPassword);
   if (!isPasswordCorrect) {
