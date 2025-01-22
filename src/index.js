@@ -1,3 +1,4 @@
+// index.js
 import connectDB from "./database/connection.db.js";
 import dotenv from "dotenv";
 import { app } from "./app.js";
